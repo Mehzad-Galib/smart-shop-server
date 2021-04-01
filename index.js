@@ -7,20 +7,18 @@ require('dotenv').config();
 const app = express();
 app.use(cors());
 
-const pass = 'aCVjofJpW4auwNsc'
-
 // body parser alternative
 app.use(express.urlencoded({ extended:true }));
 app.use(express.json());  
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.tqgoj.mongodb.net/freshfood?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.tqgoj.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 client.connect(err => {
     console.log('db connected')
-  const foodCollection = client.db("freshfood").collection("foods");
-  const ordersCollection = client.db("freshfood").collection("orders");
+  const foodCollection = client.db(`${process.env.DB_NAME}`).collection("foods");
+  const ordersCollection = client.db(`${process.env.DB_NAME}`).collection("orders");
  
 
    // for reading in the home page
@@ -81,7 +79,7 @@ client.connect(err => {
 
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send('Database is Working')
   })
   
   
