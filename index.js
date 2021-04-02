@@ -7,7 +7,6 @@ require('dotenv').config();
 const app = express();
 app.use(cors());
 
-// body parser alternative
 app.use(express.urlencoded({ extended:true }));
 app.use(express.json());  
 
@@ -19,7 +18,6 @@ client.connect(err => {
     console.log('db connected')
   const foodCollection = client.db("freshfood").collection("foods");
   const ordersCollection = client.db("freshfood").collection("orders");
- 
 
    // for reading in the home page
   app.get('/foods', (req, res) => {
@@ -36,8 +34,6 @@ client.connect(err => {
     })
   })
 
-
-
   // creating data and send it to database, show on home page
   app.post("/addFood", (req, res) => {
     const newFood = req.body;
@@ -49,12 +45,9 @@ client.connect(err => {
   // deleting data from database and UI
   app.delete('/delete/:id', (req, res)=>{
     foodCollection.deleteOne({_id: ObjectId(req.params.id)})
-    .then((err, result)=>{
-      
+    .then((err, result)=>{     
     })
-  })
-    
-    
+  })  
   })
 
   app.post('/orderInfo', (req,res)=>{
@@ -75,13 +68,9 @@ client.connect(err => {
 
 });
 
-
-
-
 app.get('/', (req, res) => {
     res.send('Database is Working')
-  })
-  
+  }) 
   
 const port = process.env.PORT || 8080;
   
