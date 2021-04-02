@@ -17,8 +17,8 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 client.connect(err => {
     console.log('db connected')
-  const foodCollection = client.db(`${process.env.DB_NAME}`).collection("foods");
-  const ordersCollection = client.db(`${process.env.DB_NAME}`).collection("orders");
+  const foodCollection = client.db("freshfood").collection("foods");
+  const ordersCollection = client.db("freshfood").collection("orders");
  
 
    // for reading in the home page
@@ -83,8 +83,8 @@ app.get('/', (req, res) => {
   })
   
   
-const port = 8080;
+const port = process.env.PORT || 8080;
   
-app.listen(process.env.PORT || port, () => {
+app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 }) 
